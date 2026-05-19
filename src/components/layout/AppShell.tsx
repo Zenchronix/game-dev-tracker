@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import GridBackground from "./GridBackground";
 import Sidebar from "./Sidebar";
 import TopNav from "./TopNav";
+import BottomNav from "./BottomNav";
 import CommandPalette from "@/components/search/CommandPalette";
 import { useSearch } from "@/contexts/SearchContext";
 
@@ -23,15 +25,36 @@ function GlobalKeyListener() {
 }
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="relative min-h-screen" style={{ backgroundColor: "var(--bg-base)" }}>
       <GlobalKeyListener />
       <GridBackground />
-      <Sidebar />
-      <div className="relative ml-[220px] flex min-h-screen flex-col">
-        <TopNav />
-        <main className="flex-1 overflow-y-auto">{children}</main>
+
+      {/* Mobile backdrop */}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-black/50 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+      {/* Main content — no left margin on mobile, 220px on desktop */}
+      <div className="relative md:ml-[220px] flex min-h-screen flex-col">
+        <TopNav onMenuClick={() => setSidebarOpen((v) => !v)} />
+        {/* pb-16 on mobile for bottom nav, pb-0 on desktop */}
+        <main className="flex-1 overflow-y-auto pb-16 md:pb-0">{children}</main>
       </div>
+
+      <BottomNav />
       <CommandPalette />
     </div>
   );

@@ -85,7 +85,7 @@ function ProjectRow({
         )}
 
         {/* Key metrics */}
-        <div className="mb-3 grid grid-cols-3 gap-2">
+        <div className="mb-3 grid grid-cols-3 gap-1.5 sm:gap-2">
           {[
             { label: zh ? "累计时长" : "Total Hours", value: `${hours}h`, color: project.coverColor },
             { label: zh ? `第 ${dayN} 天` : `Day ${dayN}`, value: `D${dayN}`, color: "#a855f7" },

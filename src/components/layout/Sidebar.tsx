@@ -121,7 +121,12 @@ function MilestoneSidebar() {
   );
 }
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { t, lang, toggle: toggleLang } = useLanguage();
   const { theme, toggle: toggleTheme } = useTheme();
@@ -136,7 +141,14 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="fixed left-0 top-0 z-30 flex h-screen w-[220px] flex-col backdrop-blur-sm"
+      className={[
+        "fixed left-0 top-0 z-50 flex h-screen w-[220px] flex-col backdrop-blur-sm",
+        "transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        // Mobile: hidden by default, visible when isOpen
+        isOpen ? "translate-x-0" : "-translate-x-full",
+        // Desktop: always visible
+        "md:translate-x-0 md:z-30",
+      ].join(" ")}
       style={{
         backgroundColor: "var(--bg-sidebar)",
         borderRight: "1px solid var(--border-color)",
@@ -169,7 +181,7 @@ export default function Sidebar() {
         {navItems.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
-            <Link key={href} href={href} className={cn("sidebar-item", isActive && "active")}>
+            <Link key={href} href={href} onClick={onClose} className={cn("sidebar-item", isActive && "active")}>
               <Icon className="h-4 w-4 shrink-0" />
               <span>{label}</span>
             </Link>
