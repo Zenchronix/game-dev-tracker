@@ -10,10 +10,10 @@ interface TooltipPayloadItem {
 
 interface CustomTooltipProps {
   active?: boolean;
-  payload?: TooltipPayloadItem[];
+  payload?: readonly TooltipPayloadItem[];
   label?: string;
   formatter?: (value: number, name: string, item: TooltipPayloadItem) => [string, string];
-  labelFormatter?: (label: string, payload: TooltipPayloadItem[]) => string;
+  labelFormatter?: (label: string, payload: readonly TooltipPayloadItem[]) => string;
 }
 
 export default function ChartTooltip({
