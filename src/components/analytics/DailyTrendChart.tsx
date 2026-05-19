@@ -93,7 +93,10 @@ export default function DailyTrendChart({ data }: DailyTrendChartProps) {
             <Tooltip
               content={(props) => (
                 <ChartTooltip
-                  {...props}
+                  active={props.active}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  payload={props.payload as any}
+                  label={String(props.label ?? "")}
                   labelFormatter={(label, payload) => {
                     const p = payload?.[0]?.payload as DailyPoint | undefined;
                     return `${label}${p?.logCount ? ` · ${p.logCount} ${a.trendLogCount}` : ""}`;
