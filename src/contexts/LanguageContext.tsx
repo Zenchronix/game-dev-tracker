@@ -40,7 +40,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider
-      value={{ lang, toggle, t: translations[lang] }}
+      value={{ lang, toggle, t: translations[lang] as unknown as Translations }}
     >
       {children}
     </LanguageContext.Provider>
