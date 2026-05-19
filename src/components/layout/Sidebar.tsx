@@ -127,7 +127,7 @@ export default function Sidebar() {
   const { theme, toggle: toggleTheme } = useTheme();
 
   const navItems = [
-    { href: "/",          label: t.nav.dashboard,  icon: LayoutDashboard },
+    { href: "/dashboard", label: t.nav.dashboard,  icon: LayoutDashboard },
     { href: "/projects",  label: t.nav.projects,   icon: Gamepad2 },
     { href: "/logs",      label: t.nav.devLogs,    icon: BookOpen },
     { href: "/analytics", label: t.nav.analytics,  icon: BarChart3 },
@@ -167,7 +167,7 @@ export default function Sidebar() {
           {t.nav.workspace}
         </p>
         {navItems.map(({ href, label, icon: Icon }) => {
-          const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const isActive = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
             <Link key={href} href={href} className={cn("sidebar-item", isActive && "active")}>
               <Icon className="h-4 w-4 shrink-0" />

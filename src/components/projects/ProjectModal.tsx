@@ -8,6 +8,15 @@ import { useProjectStore } from "@/contexts/ProjectStoreContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/cn";
 
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="mb-1 block text-xs font-medium" style={{ color: "var(--text-2)" }}>{label}</label>
+      {children}
+    </div>
+  );
+}
+
 const PRESET_COLORS = [
   "#3b82f6", "#a855f7", "#22c55e", "#f97316",
   "#ef4444", "#06b6d4", "#eab308", "#ec4899",
@@ -157,15 +166,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     active: "bg-green-500/15 text-green-300 border border-green-500/25",
     crunch: "bg-orange-500/15 text-orange-300 border border-orange-500/25",
   };
-
-  function Field({ label, children }: { label: string; children: React.ReactNode }) {
-    return (
-      <div>
-        <label className="mb-1 block text-xs font-medium" style={{ color: "var(--text-2)" }}>{label}</label>
-        {children}
-      </div>
-    );
-  }
 
   return (
     <AnimatePresence>
